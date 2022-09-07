@@ -1,7 +1,11 @@
 #include "Insured_order.h"
 
-Insured_order::Insured_order() :Ordinary_order(order_date, order_time, description, price)
+Insured_order::Insured_order() //:Ordinary_order(order_date, order_time, description, price)
 {
+	order_date = Date(0, 0, 0);
+	order_time = Time(0, 0, 0);
+	description = "";
+	price = 0;
 	name_company = "";
 	money_amount = 0;
 }
@@ -74,7 +78,7 @@ string Insured_order::type() const
 
 string Insured_order::toString() const
 {
-	return to_string(number) + " " + to_string(order_date.getYear()) + "." + to_string(order_date.getMonth()) + "." + to_string(order_date.getDay()) + " " + to_string(order_time.getHour()) + ":" + to_string(order_time.getMinutes()) + ":" + to_string(order_time.getSeconds()) + " " + description + " " + to_string(price) + " " + name_company + " " + to_string(money_amount);
+	return to_string(number) + " " + to_string(order_date.getYear()) + "." + to_string(order_date.getMonth()) + "." + to_string(order_date.getDay()) + " " + to_string(order_time.getHour()) + ":" + to_string(order_time.getMinutes()) + ":" + to_string(order_time.getSeconds()) + " " + description + " " + to_string(price) + " " + name_company + " " + to_string(money_amount) + " ";
 }
 
 void Insured_order::save(ofstream& file)
@@ -83,19 +87,41 @@ void Insured_order::save(ofstream& file)
 	file << toString() << endl;
 }
 
-string Insured_order::load(ifstream& file)
+void Insured_order::load(string row)
 {
-	string tmp;
-	tmp += Ordinary_order::load(file);
+	row.erase(0, row.find(" ") + 1);
 
-	while (!file.eof())
-	{
-		name_company = tmp.substr(0, tmp.find(" "));
-		tmp.erase(0, tmp.find(" ") + 1);
+	number = atoi(row.c_str());
+	row.erase(0, row.find(" ") + 1);
 
-		money_amount = atof(tmp.c_str());
-		tmp.erase(0, tmp.find(" ") + 1);
-		break;
-	}
-	return tmp;
+	order_date.setYear(atoi(row.c_str()));
+	row.erase(0, row.find(".") + 1);
+
+	order_date.setMonth(atoi(row.c_str()));
+	row.erase(0, row.find(".") + 1);
+
+	order_date.setDay(atoi(row.c_str()));
+	row.erase(0, row.find(" ") + 1);
+
+	order_time.setHour(atoi(row.c_str()));
+	row.erase(0, row.find(":") + 1);
+
+	order_time.setMinutes(atoi(row.c_str()));
+	row.erase(0, row.find(":") + 1);
+
+	order_time.setSeconds(atoi(row.c_str()));
+	row.erase(0, row.find(" ") + 1);
+
+	description = row.substr(0, row.find(" "));
+	row.erase(0, row.find(" ") + 1);
+
+	price = atof(row.c_str());
+	row.erase(0, row.find(" ") + 1);
+
+	name_company = row.substr(0, row.find(" "));
+	row.erase(0, row.find(" ") + 1);
+
+	money_amount = atof(row.c_str());
+	row.erase(0, row.find(" ") + 1);
+	
 }

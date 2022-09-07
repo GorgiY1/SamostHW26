@@ -1,7 +1,11 @@
 #include "Express_Order.h"
 
-Express_Order::Express_Order():Ordinary_order(order_date, order_time, description, price)
+Express_Order::Express_Order()//:Ordinary_order(order_date, order_time, description, price)
 {
+	 order_date = Date(0, 0, 0);
+    order_time = Time(0, 0, 0);
+    description = "";
+    price = 0;
 	courier = "";
 	days_to_deliver = 0;
 }
@@ -38,6 +42,7 @@ int Express_Order::get_days_to_deliver() const
 
 void Express_Order::set_courier(string courier)
 {
+	// the courier must not have a name
 	if (courier != "")
 	{
 		this->courier = courier;
@@ -48,6 +53,7 @@ void Express_Order::set_courier(string courier)
 
 void Express_Order::set_days_to_deliver(int days_to_deliver)
 {
+	// days_to_deliver cannot be less than zero
 	if (days_to_deliver >= 0)
 	{
 		this->days_to_deliver = days_to_deliver;
@@ -71,7 +77,6 @@ void Express_Order::show() const
 	cout << " name of courier:\t" << courier << endl;
 	cout << " days_to_deliver:\t" << days_to_deliver << endl;
 	cout << "\n\n";
-
 }
 
 string Express_Order::type() const
@@ -81,7 +86,7 @@ string Express_Order::type() const
 
 string Express_Order::toString() const
 {
-	return to_string(number) + " " + to_string(order_date.getYear()) + "." + to_string(order_date.getMonth()) + "." + to_string(order_date.getDay()) + " " + to_string(order_time.getHour()) + ":" + to_string(order_time.getMinutes()) + ":" + to_string(order_time.getSeconds()) + " " + description + " " + to_string(price) + " " + courier + " " + to_string(days_to_deliver);
+	return to_string(number) + " " + to_string(order_date.getYear()) + "." + to_string(order_date.getMonth()) + "." + to_string(order_date.getDay()) + " " + to_string(order_time.getHour()) + ":" + to_string(order_time.getMinutes()) + ":" + to_string(order_time.getSeconds()) + " " + description + " " + to_string(price) + " " + courier + " " + to_string(days_to_deliver) + " ";
 
 }
 
@@ -91,19 +96,40 @@ void Express_Order::save(ofstream& file)
 	file << toString() << endl;
 }
 
-string Express_Order::load(ifstream& file)
+void Express_Order::load(string row)
 {
-	string tmp;
-	tmp += Ordinary_order::load(file);
+	row.erase(0, row.find(" ") + 1);
 
-	while (!file.eof())
-	{
-		courier = tmp.substr(0, tmp.find(" "));
-		tmp.erase(0, tmp.find(" ") + 1);
+	number = atoi(row.c_str());
+	row.erase(0, row.find(" ") + 1);
 
-		days_to_deliver = atoi(tmp.c_str());
-		tmp.erase(0, tmp.find(" ") + 1);
-		break;
-	}
-	return tmp;
+	order_date.setYear(atoi(row.c_str()));
+	row.erase(0, row.find(".") + 1);
+
+	order_date.setMonth(atoi(row.c_str()));
+	row.erase(0, row.find(".") + 1);
+
+	order_date.setDay(atoi(row.c_str()));
+	row.erase(0, row.find(" ") + 1);
+
+	order_time.setHour(atoi(row.c_str()));
+	row.erase(0, row.find(":") + 1);
+
+	order_time.setMinutes(atoi(row.c_str()));
+	row.erase(0, row.find(":") + 1);
+
+	order_time.setSeconds(atoi(row.c_str()));
+	row.erase(0, row.find(" ") + 1);
+
+	description = row.substr(0, row.find(" "));
+	row.erase(0, row.find(" ") + 1);
+
+	price = atof(row.c_str());
+	row.erase(0, row.find(" ") + 1);
+
+	courier = row.substr(0, row.find(" "));
+	row.erase(0, row.find(" ") + 1);
+
+	days_to_deliver = atoi(row.c_str());
+	row.erase(0, row.find(" ") + 1);
 }

@@ -69,3 +69,21 @@ public:
 		cout << "\nWarning! Days to deliver will be bigger than zero or equal to zero!\n\n";
 	}
 };
+
+class Search_exception : public Order_exceptions
+{
+public:
+	virtual void show_message()override
+	{
+		cout << "\nWarning! Order not found!\n\n";
+	}
+};
+
+class Delete_exception : public Order_exceptions
+{
+public:
+	virtual void show_message()override
+	{
+		cout << "\nWarning! Order not found and will be not deleted!\n\n";
+	}
+};

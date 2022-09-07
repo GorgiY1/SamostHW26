@@ -22,10 +22,10 @@ int main()
 	{
 	All_orders allOrd;
 
-	Ordinary_order ord(Date(2025, 12, 18), Time(23, 59, 5), "meat", 85);
+	Ordinary_order ord(Date(2022, 12, 18), Time(8, 59, 3), "meat", 85);
 	allOrd.add_order(&ord);
-	Express_Order d(Date(2028, 15, 12), Time(23, 57, 5), "milk", 45, "pit", 2);
-	Insured_order d2(Date(2027, 15, 12), Time(23, 56, 5), "bread", 5, "MeastExcpress", 500);
+	Express_Order d(Date(2028, 9, 12), Time(10, 57,3), "milk", 45, "pit", 2);
+	Insured_order d2(Date(2027, 5, 12), Time(6, 56, 3), "bread", 5, "MeastExcpress", 500);
 	allOrd.add_order(&d);
 	allOrd.add_order(&d2);
 
@@ -33,7 +33,7 @@ int main()
 		ord.set_description("kjhf");
 		ord.show();
 		allOrd.add_order(&ord);*/
-	
+
 	int number = 0;
 	Date order_date = Date(0, 0, 0);
 	Time order_time = Time(0, 0, 0);
@@ -42,7 +42,7 @@ int main()
 	string courier = "";
 	int days_to_deliver = 0;
 	string name_company = "";
-	float money_amount = 0;
+	float money_amount = 0;        
 	
 	string type = "";
 

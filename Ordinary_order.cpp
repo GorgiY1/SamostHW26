@@ -11,6 +11,7 @@ Ordinary_order::Ordinary_order()//:Order(order_date, order_time)
 Ordinary_order::Ordinary_order(Date order_date, Time order_time, string description, float price):Order(order_date, order_time)
 {
     this->description = description;
+    // price cannot be less than zero
     if (price >= 0)
     {
         this->price = price;
@@ -65,7 +66,7 @@ string Ordinary_order::type() const
 
 string Ordinary_order::toString() const
 {
-    return to_string(number) + " " + to_string(order_date.getYear()) + "." + to_string(order_date.getMonth()) + "." + to_string(order_date.getDay()) + " " + to_string(order_time.getHour()) + ":" + to_string(order_time.getMinutes()) + ":" + to_string(order_time.getSeconds()) + " " + description + " " + to_string(price);
+    return to_string(number) + " " + to_string(order_date.getYear()) + "." + to_string(order_date.getMonth()) + "." + to_string(order_date.getDay()) + " " + to_string(order_time.getHour()) + ":" + to_string(order_time.getMinutes()) + ":" + to_string(order_time.getSeconds()) + " " + description + " " + to_string(price) + " ";
 }
 
 void Ordinary_order::save(ofstream& file)
@@ -74,42 +75,34 @@ void Ordinary_order::save(ofstream& file)
     file << toString() << endl;
 }
 
-string Ordinary_order::load(ifstream& file)
+void Ordinary_order::load(string row)
 {
-    string tmp = "";
-    
-    while (!file.eof())
-    {
-        getline(file, tmp);
-        tmp.erase(tmp.find(type()), tmp.find(" ") + 1);
+    row.erase(0, row.find(" ") + 1);
 
-        number = atoi(tmp.c_str());
-        tmp.erase(0, tmp.find(" ") + 1);
-        
-        order_date.setYear(atoi(tmp.c_str()));
-        tmp.erase(0, tmp.find(".") + 1);
-      
-        order_date.setMonth(atoi(tmp.c_str()));
-        tmp.erase(0, tmp.find(".") + 1);
+    number = atoi(row.c_str());
+    row.erase(0, row.find(" ") + 1);
 
-        order_date.setDay(atoi(tmp.c_str()));
-        tmp.erase(0, tmp.find(" ") + 1);
+    order_date.setYear(atoi(row.c_str()));
+    row.erase(0, row.find(".") + 1);
 
-        order_time.setHour(atoi(tmp.c_str()));
-        tmp.erase(0, tmp.find(":") + 1);
+    order_date.setMonth(atoi(row.substr(0, row.find(".")).c_str()));
+    row.erase(0, row.find(".") + 1);
 
-        order_time.setMinutes(atoi(tmp.c_str()));
-        tmp.erase(0, tmp.find(":") + 1);
+    order_date.setDay(atoi(row.c_str()));
+    row.erase(0, row.find(" ") + 1);
 
-        order_time.setSeconds(atoi(tmp.c_str()));
-        tmp.erase(0, tmp.find(" ") + 1);
-       
-        description = tmp.substr(0,tmp.find(" "));
-        tmp.erase(0, tmp.find(" ") + 1);
+    order_time.setHour(atoi(row.c_str()));
+    row.erase(0, row.find(":") + 1);
 
-        price = atof(tmp.c_str());
-        tmp.erase(0, tmp.find(" ") + 1);
-        break;
-    }
-    return tmp;
+    order_time.setMinutes(atoi(row.c_str()));
+    row.erase(0, row.find(":") + 1);
+
+    order_time.setSeconds(atoi(row.c_str()));
+    row.erase(0, row.find(" ") + 1);
+
+    description = row.substr(0, row.find(" "));
+    row.erase(0, row.find(" ") + 1);
+
+    price = atof(row.c_str());
+    row.erase(0, row.find(" ") + 1);
 }

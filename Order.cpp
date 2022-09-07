@@ -9,9 +9,17 @@ Order::Order()
 
 Order::Order(Date order_date, Time order_time)
 {
-	if (order_date >= Date())
+	// === !!! === order can't be for yesterday 
+	if (order_date > Date()) 
 	{
 		this->order_date = order_date;
+		// if the order is for tomorrow, then you can choose any time
+		this->order_time = order_time;
+	}
+	else if (order_date == Date()) // 
+	{
+		this->order_date = order_date;
+		// if the order is for today, then you need to select a time greater than now
 		if (order_time >= Time())
 		{
 			this->order_time = order_time;

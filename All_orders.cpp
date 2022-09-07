@@ -31,18 +31,6 @@ void All_orders::add_order(Order* obj)
 
 void All_orders::show_syst()
 {
-	/*if (((Ordinary_order*)(*(i)))->get_order_time() == critery)
-	{
-		(*(i))->show();
-	}
-	else if (((Express_Order*)(*(i)))->get_order_time() == critery)
-	{
-		(*(i))->show();
-	}
-	else if (((Insured_order*)(*(i)))->get_order_time() == critery)
-	{
-		(*(i))->show();
-	}*/
 	for (i = syst.begin(); i != syst.end(); i++)
 	{
 		(*(i))->show();
@@ -51,162 +39,217 @@ void All_orders::show_syst()
 
 void All_orders::search_by_type(string type)
 {
+	bool is_found = false;
 	for (i = syst.begin(); i != syst.end(); i++)
 	{
 		if (((Ordinary_order*)(*(i)))->type() == type)
 		{
 			(*(i))->show();
+			is_found = true;
 		}
 		else if (((Express_Order*)(*(i)))->type() == type)
 		{
 			(*(i))->show();
+			is_found = true;
 		}
 		else if (((Insured_order*)(*(i)))->type() == type)
 		{
 			(*(i))->show();
-		}
+			is_found = true;
+		} 
 	}
+	if (is_found == false)
+		throw new Search_exception;
 }
 
 void All_orders::search_by_date(Date critery)
 {
+	bool is_found = false;
 	for (i = syst.begin(); i != syst.end(); i++)
 	{
 		//if (((Ordinary_order*)(*(i)))->get_order_date() == Date(atoi(critery.substr(0, critery.find(".")).c_str()), atoi(critery.substr(critery.find(".")+1, critery.find(".")).c_str()), atoi(critery.substr(critery.find(".") + 1, 2).c_str())))
 		if (((Ordinary_order*)(*(i)))->get_order_date() == critery)
 		{
 			(*(i))->show();
+			is_found = true;
 		}
 		else if(((Express_Order*)(*(i)))->get_order_date() == critery)
 		{
 			(*(i))->show();
+			is_found = true;
 		}
 		else if (((Insured_order*)(*(i)))->get_order_date() == critery)
 		{
 			(*(i))->show();
+			is_found = true;
 		}
+		else throw new Search_exception;
 	}
-
+	if (is_found == false)
+		throw new Search_exception;
 }
 void All_orders::search_by_time(Time critery)
 {
+	bool is_found = false;
 	for (i = syst.begin(); i != syst.end(); i++)
 	{
 		if (((Ordinary_order*)(*(i)))->get_order_time() == critery)
 		{
 
 			(*(i))->show();
+			is_found = true;
 		}
 		else if (((Express_Order*)(*(i)))->get_order_time() == critery)
 		{
 			(*(i))->show();
+			is_found = true;
 		}
 		else if (((Insured_order*)(*(i)))->get_order_time() == critery)
 		{
 			(*(i))->show();
+			is_found = true;
 		}
 	}
-
+	if (is_found == false)
+		throw new Search_exception;
 }
 
 void All_orders::search_by_description(string description)
 {
+	bool is_found = false;
 	for (i = syst.begin(); i != syst.end(); i++)
 	{
 		if (((Ordinary_order*)(*(i)))->get_description() == description)
 		{
 			(*(i))->show();
+			is_found = true;
 		}
 		else if (((Express_Order*)(*(i)))->get_description() == description)
 		{
 			(*(i))->show();
+			is_found = true;
 		}
 		else if (((Insured_order*)(*(i)))->get_description() == description)
 		{
 			(*(i))->show();
+			is_found = true;
 		}
+		
 	}
+	if (is_found == false)
+		throw new Search_exception;
 }
 
 void All_orders::search_by_price(float price)
 {
+	bool is_found = false;
 	for (i = syst.begin(); i != syst.end(); i++)
 	{
 		if (((Ordinary_order*)(*(i)))->get_price() == price)
 		{
 			(*(i))->show();
+			is_found = true;
 		}
 		else if (((Express_Order*)(*(i)))->get_price() == price)
 		{
 			(*(i))->show();
+			is_found = true;
 		}
 		else if (((Insured_order*)(*(i)))->get_price() == price)
 		{
 			(*(i))->show();
+			is_found = true;
 		}
 	}
+	if (is_found == false)
+		throw new Search_exception;
 }
 
 void All_orders::search_by_courier(string courier)
 {
+	bool is_found = false;
 	for (i = syst.begin(); i != syst.end(); i++)
 	{
 		if (((Express_Order*)(*(i)))->get_courier() == courier)
 		{
 			(*(i))->show();
+			is_found = true;
 		}
+		
 	}
+	if (is_found == false)
+		throw new Search_exception;
 }
 
 void All_orders::search_by_days_to_deliver(int days_to_deliver)
 {
+	bool is_found = false;
 	for (i = syst.begin(); i != syst.end(); i++)
 	{
 		if (((Express_Order*)(*(i)))->get_days_to_deliver() == days_to_deliver)
 		{
 			(*(i))->show();
+			is_found = true;
 		}
 	}
+	if (is_found == false)
+		throw new Search_exception;
 }
 
 void All_orders::search_by_name_company(string name_company)
 {
-	if (((Insured_order*)(*(i)))->get_name_company() == name_company)
+	bool is_found = false;
+	for (i = syst.begin(); i != syst.end(); i++)
 	{
-		(*(i))->show();
+		if (((Insured_order*)(*(i)))->get_name_company() == name_company)
+		{
+			(*(i))->show();
+			is_found = true;
+		}
 	}
+	if (is_found == false)
+		throw new Search_exception;
 }
 
 void All_orders::search_by_days_money_amountr(float money_amount)
 {
-	if (((Insured_order*)(*(i)))->get_money_amount() == money_amount)
+	bool is_found = false;
+	for (i = syst.begin(); i != syst.end(); i++)
 	{
-		(*(i))->show();
+		if (((Insured_order*)(*(i)))->get_money_amount() == money_amount)
+		{
+			(*(i))->show();
+			is_found = true;
+		}
 	}
+	if (is_found == false)
+		throw new Search_exception;
 }
 
 void All_orders::sort_by_number()
 {
+	// !!! sorting with a multiset 
 	multiset<Order*, Compire_by_num>tmp;
 	multiset<Order*, Compire_by_num>::iterator itm = tmp.begin();
 
+	//transformation vector in multiset
 	for (i = syst.begin(); i != syst.end(); i++)
 	{
 		if ((*(i))->type() == "Ordinary_order")
 		{
-			tmp.emplace(((Ordinary_order*)(*(i))));
+			tmp.emplace(((Ordinary_order*)(*(i))));// hand over of object in multiset which got from the vector
 		}
 		if ((*(i))->type() == "Express_Order")
 		{
 			tmp.emplace(((Express_Order*)(*(i))));
 		}
 		if ((*(i))->type() == "Insured_order")
-		{
+		{ 
 			tmp.emplace(((Insured_order*)(*(i))));
 		}
 	}
 	syst.erase(syst.begin(), syst.end());
-
+	
 	for (itm = tmp.begin(); itm != tmp.end(); itm++)
 	{
 		if ((*(itm))->type() == "Ordinary_order")
@@ -226,14 +269,16 @@ void All_orders::sort_by_number()
 
 void All_orders::sort_by_date()
 {
+	// !!! sorting with a multiset 
 	multiset<Order*, Compire_by_date>tmp;
 	multiset<Order*, Compire_by_date>::iterator itm = tmp.begin();
 	
+	//transformation vector in multiset
 	for (i = syst.begin(); i != syst.end(); i++)
 	{
 		if ((*(i))->type() == "Ordinary_order")
 		{
-			tmp.emplace(((Ordinary_order*)(*(i))));
+			tmp.emplace(((Ordinary_order*)(*(i))));// hand over of object in multiset which got from the vector
 		}
 		if ((*(i))->type() == "Express_Order")
 		{
@@ -266,15 +311,16 @@ void All_orders::sort_by_date()
 	
 void All_orders::sort_by_time()
 {
+	// !!! sorting with a multiset 
 	multiset<Order*, Compire_by_time>tmp;
 	multiset<Order*, Compire_by_time>::iterator itm = tmp.begin();
 
-
+	//transformation vector in multiset
 	for (i = syst.begin(); i != syst.end(); i++)
 	{
 		if ((*(i))->type() == "Ordinary_order")
 		{
-			tmp.emplace(((Ordinary_order*)(*(i))));
+			tmp.emplace(((Ordinary_order*)(*(i)))); // hand over of object in multiset which got from the vector
 		}
 		if ((*(i))->type() == "Express_Order")
 		{
@@ -427,6 +473,7 @@ void All_orders::sort_by_priority()
 
 void All_orders::del_by_number(int number)
 {
+	bool is_deleted = false;
 	for (i = syst.begin(); i != syst.end(); i++)
 	{
 		if ((*(i))->get_number() == number)
@@ -434,13 +481,17 @@ void All_orders::del_by_number(int number)
 			vector<Order*>::iterator del = i;
 			i++;
 			syst.erase(del);
+			is_deleted = true;
 			break;
 		}
 	}
+	if (is_deleted == false)
+		throw new Delete_exception;
 }
 
 void All_orders::del_by_date(Date critery)
 {
+	bool is_deleted = false;
 	for (i = syst.begin(); i != syst.end(); i++)
 	{
 		if ((*(i))->get_order_date() == critery)
@@ -448,13 +499,17 @@ void All_orders::del_by_date(Date critery)
 			vector<Order*>::iterator del = i;
 			i++;
 			syst.erase(del);
+			is_deleted = true;
 			break;
 		}
 	}
+	if (is_deleted == false)
+		throw new Delete_exception;
 }
 
 void All_orders::del_by_time(Time critery)
 {
+	bool is_deleted = false;
 	for (i = syst.begin(); i != syst.end(); i++)
 	{
 		if ((*(i))->get_order_time() == critery)
@@ -462,13 +517,17 @@ void All_orders::del_by_time(Time critery)
 			vector<Order*>::iterator del = i;
 			i++;
 			syst.erase(del);
+			is_deleted = true;
 			break;
 		}
 	}
+	if (is_deleted == false)
+		throw new Delete_exception;
 }
 
 void All_orders::del_by_description(string description)
 {
+	bool is_deleted = false;
 	for (i = syst.begin(); i != syst.end(); i++)
 	{
 		if ((((Ordinary_order*)(*(i))))->get_description() == description)
@@ -476,13 +535,17 @@ void All_orders::del_by_description(string description)
 			vector<Order*>::iterator del = i;
 			i++;
 			syst.erase(del);
+			is_deleted = true;
 			break;
 		}
 	}
+	if (is_deleted == false)
+		throw new Delete_exception;
 }
 
 void All_orders::del_by_price(float price)
 {
+	bool is_deleted = false;
 	for (i = syst.begin(); i != syst.end(); i++)
 	{
 		if ((((Ordinary_order*)(*(i))))->get_price() == price)
@@ -490,12 +553,17 @@ void All_orders::del_by_price(float price)
 			vector<Order*>::iterator del = i;
 			i++;
 			syst.erase(del);
+			is_deleted = true;
+			break;
 		}
 	}
+	if (is_deleted == false)
+		throw new Delete_exception;
 }
 
 void All_orders::del_by_type(string type)
 {
+	bool is_deleted = false;
 	for (i = syst.begin(); i != syst.end(); i++)
 	{
 		vector<Order*>::iterator del = i;
@@ -503,9 +571,12 @@ void All_orders::del_by_type(string type)
 		if ((((Ordinary_order*)(*(del))))->type() == type)
 		{
 			syst.erase(del);
+			is_deleted = true;
 			break;
 		}
 	}
+	if (is_deleted == false)
+		throw new Delete_exception;
 }
 
 void All_orders::save(string name_file)
@@ -519,6 +590,7 @@ void All_orders::save(string name_file)
 		}
 		file.close();
 	}
+
 }
 
 void All_orders::load(string name_file)
@@ -532,27 +604,26 @@ void All_orders::load(string name_file)
 		while (!file.eof())
 		{
 			getline(file, tmp);
-			if (tmp.substr(0,tmp.find("Ordinary_order")+14) == "Ordinary_order")
+			if (tmp.substr(0,tmp.find(" ")) == "Ordinary_order")
 			{
 				//tmp.erase(tmp.begin(),tmp.end()-1);
 				obj = new Ordinary_order();
-				obj->load(file);
+				((Ordinary_order*)obj)->load(tmp);
 				add_order(obj);
 			}
-			else if (tmp == "Express_Order")
+			else if (tmp.substr(0, tmp.find(" ")) == "Express_Order")
 			{
 				obj = new Express_Order();
-				obj->load(file);
+				((Express_Order*)obj)->load(tmp);
 				add_order(obj);
-
 			}
-			else if (tmp == "Insured_order")
+			else if (tmp.substr(0, tmp.find(" ")) == "Insured_order")
 			{
 				Order* obj = new Insured_order();
-				obj->load(file);
+				((Insured_order*)obj)->load(tmp);
 				add_order(obj);
 			}
-			file.get();
+			//file.get();
 		}
 		file.close();
 	}

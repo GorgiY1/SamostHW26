@@ -21,6 +21,6 @@ public:
 
 	virtual string toString()const override;
 	virtual void save(ofstream& file)override;
-	virtual string load(ifstream& file)override;
+	virtual void load(string row)override;
 };
 

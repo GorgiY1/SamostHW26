@@ -34,7 +34,7 @@ public:
 
 	virtual string toString()const = 0;
 	virtual void save(ofstream& file) = 0;
-	virtual string load(ifstream& file) = 0;
+	virtual void load(string row) = 0;
 
 	bool operator<(const Order& obj) const&;
 };
